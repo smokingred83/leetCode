@@ -1,6 +1,3 @@
-import math
-
-
 def isPalindrome(x: int) -> bool:
     if x < 0:
         return False
