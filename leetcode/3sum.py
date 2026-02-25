@@ -1,5 +1,26 @@
 def three_sum(nums: [int]) -> [[int]]:
     result = []
+    remaining = nums
+    while len(remaining) > 2:
+        remaining = add_triplets(remaining[0], remaining[1:], result)
+    return result
+
+def add_triplets(target: int, nums: int, result: [int]) -> [int]:
+    remaining, complements, triplets = [], set(), {}
+    for n in nums:
+        complement = -target - n
+        if complement in complements:
+            triplets[(target, complement, n)] = [target, complement, n]
+        else:
+            complements.add(n)
+        if n != target:
+            remaining.append(n)
+    for t in triplets:
+        result.append(triplets[t])
+    return remaining
+
+def three_sum2(nums: [int]) -> [[int]]:
+    result = []
     for i in range(len(nums) - 2):
         visited = set(nums[:i])
         seen = set()
