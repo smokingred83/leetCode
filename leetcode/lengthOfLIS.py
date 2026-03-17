@@ -5,7 +5,7 @@ def lengthOfLIS(nums: [int]) -> int:
         if pos >= len(result):
             result.append(nums[i])
         else:
-            result[pos] = min(result[pos], nums[i])
+            result[pos] = nums[i]
     return len(result)
 
 def search(nums: [int], tgt: int) -> int:
