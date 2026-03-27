@@ -6,7 +6,7 @@ def longestPalindrome(s: str) -> str:
             break
         for right in range(len(s) -1, i, -1):
             middle = (right + left) // 2
-            while left >= middle:
+            if left <= middle:
                 if s[left] == s[right]:
                     temp += s[left]
                     left += 1
