@@ -1,22 +1,19 @@
 def longestPalindrome(s: str) -> str:
-    result, temp = "", ""
-    for i in range(len(s) - 1):
-        left = i
-        if len(result) >= len(s) - i:
-            break
-        for right in range(len(s) -1, i, -1):
-            middle = (right + left) // 2
-            if left <= middle:
-                if s[left] == s[right]:
-                    temp += s[left]
-                    left += 1
-                else:
-                    temp = ""
-                    left = i
-        result = max(result, temp, key=len)
-        temp = ""
+    result = s[0]
+    for i in range(len(s)):
+        left, right, delta = 0, i, 0
+        while left < right:
+            if s[left] == s[right]:
+                delta += 1
+                right -= 1
+            else:
+                left -= delta
+                delta = 0
+                right = i
+            left += 1
+        result = max(result, s[left - delta: i + 1], key=len)
     return result
 
 if __name__ == "__main__":
-    res = longestPalindrome("babad")
+    res = longestPalindrome("aaaabaaa") # abbcccba
     res
