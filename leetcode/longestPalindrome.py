@@ -1,14 +1,18 @@
 def longestPalindrome(s: str) -> str:
-    if len(s) == 1:
-        return s[0]
-    longest_l, longest_r, left = 0, 0, 0
+    longest_l = longest_r = left = 0
     for right in range(len(s)):
         if left > 0 and s[left -1] == s[right]:
             left -= 1
-        elif s[max(0, right - 2)] == s[right]:
-            left = left if s[left] == s[right] else max(0, right - 2)
         else:
-            left = right -1 if s[right - 1] == s[right] else right
+            i, j = left, right
+            while i < j:
+                if s[i] != s[j]:
+                    left += 1
+                    i = left
+                    j = right
+                else:
+                    j -= 1
+                    i += 1
         if (right - left) > (longest_r - longest_l):
             longest_l = left
             longest_r = right
@@ -31,5 +35,11 @@ def longestPalindrome1(s: str) -> str:
     return result
 
 if __name__ == "__main__":
-    res = longestPalindrome("bacabab") # abb bananas aacabdkacaa abbcccba aaaabaaa cbbd
+    res = longestPalindrome("bacabab")
+    res = longestPalindrome("abb")
+    res = longestPalindrome("bananas")
+    res = longestPalindrome("aacabdkacaa")
+    res = longestPalindrome("abbcccba")
+    res = longestPalindrome("aaaabaaa")
+    res = longestPalindrome("cbbd")
     res
