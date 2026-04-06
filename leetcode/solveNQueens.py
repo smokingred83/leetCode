@@ -10,6 +10,7 @@ def solve(row, columns, diags, grid, result):
     if row < 0:
         board = ["".join(grid[i]) for i in range(len(grid) - 1)]
         result.append(board)
+        return
     for i, c in enumerate(columns):
         if c not in diags:
             grid[row][c] = "Q"
