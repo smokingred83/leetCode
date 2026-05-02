@@ -44,8 +44,18 @@ def solveKnapsack_tab(profits: [int], weights: [int], capacity: int) -> int:
                 dp[idx][cap] = max(profit + dp[idx-1][cap-weight], dp[idx-1][cap])
             else:
                 dp[idx][cap] = dp[idx-1][cap]
+    print_selected_elements(dp, weights, capacity)
     return dp[len(profits)][capacity]
 
+def print_selected_elements(dp: [[int]], weights: [int], capacity):
+    idx, cap = len(weights), capacity
+    while cap > 0:
+        if dp[idx][cap] == dp[idx - 1][cap]:
+            idx -= 1
+        else:
+            print(f'Item {idx - 1}')
+            cap -= weights[idx - 1]
+
 if __name__ == "__main__":
-    res = solveKnapsack_tab([4, 5, 3, 7], [2, 3, 1, 4], 5)
+    res = solveKnapsack_tab([1, 6, 10, 16], [1, 2, 3, 5], 7)
     res
