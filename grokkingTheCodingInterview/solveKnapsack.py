@@ -39,7 +39,9 @@ def solveKnapsack_tab(profits: [int], weights: [int], capacity: int) -> int:
     for idx in range(1, len(profits)+1):
         for cap in range(capacity+1):
             if weights[idx-1] <= cap:
-                dp[idx][cap] = max(profits[idx-1] + dp[idx-1][cap-weights[idx-1]], dp[idx-1][cap])
+                dp[idx][cap] = max(
+                    profits[idx-1] + dp[idx-1][cap-weights[idx-1]],
+                    dp[idx-1][cap])
             else:
                 dp[idx][cap] = dp[idx-1][cap]
     return dp[len(profits)][capacity]
