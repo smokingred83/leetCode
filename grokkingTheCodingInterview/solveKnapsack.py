@@ -47,6 +47,41 @@ def solveKnapsack_tab(profits: [int], weights: [int], capacity: int) -> int:
     print_selected_elements(dp, weights, capacity)
     return dp[len(profits)][capacity]
 
+def solveKnapsack_const_space(profits: [int], weights: [int], capacity: int) -> int:
+    if len(profits) <= 0:
+        return 0
+    dp = [[0 for x in range(capacity+1)] for y in range(2)]
+    for cap in range(1, capacity+1):
+        if weights[0] <= cap:
+            dp[0][cap] = dp[1][cap] = profits[0]
+
+    for i in range(1, len(weights)):
+        for cap in range(1, capacity+1):
+            profit1 = 0
+            if weights[i] <= cap:
+                profit1 = profits[i] + dp[(i-1)%2][cap-weights[i]]
+            profit2 = dp[(i-1)%2][cap]
+            dp[i%2][cap] = max(profit1, profit2)
+    return dp[(len(weights)-1)%2][capacity]
+
+def solveKnapsack_one_array(profits: [int], weights: [int], capacity: int) -> int:
+    if len(profits) <= 0:
+        return 0
+
+    dp = [0 for x in range(capacity+1)]
+    for cap in range(1, capacity + 1):
+        if weights[0] <= cap:
+            dp[cap] = profits[0]
+
+    for i in range(1, len(weights)):
+        for cap in range(capacity, 0, -1):
+            profit1 = 0
+            if weights[i] <= cap:
+                profit1 = profits[i] + dp[cap-weights[i]]
+            profit2 = dp[cap]
+            dp[cap] = max(profit1, profit2)
+    return dp[capacity]
+
 def print_selected_elements(dp: [[int]], weights: [int], capacity):
     idx, cap = len(weights), capacity
     while cap > 0:
@@ -57,5 +92,5 @@ def print_selected_elements(dp: [[int]], weights: [int], capacity):
             cap -= weights[idx - 1]
 
 if __name__ == "__main__":
-    res = solveKnapsack_tab([1, 6, 10, 16], [1, 2, 3, 5], 7)
+    res = solveKnapsack_one_array([4, 5, 3, 7], [2, 3, 1, 4], 5)
     res
