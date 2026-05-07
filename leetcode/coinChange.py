@@ -8,19 +8,19 @@ def coinsChange(coins: List[int], amount: int) -> int:
 def coinsChange_memo(coins: List[int], amount: int, memo: dict):
     if amount in memo:
         return memo[amount]
-
     if amount == 0:
         return 0
-
     if amount < 0:
         return -1
 
-    results = []
+    best = -1
     for coin in coins:
-        result = coinsChange_memo(coins, amount - coin, memo)
-        if result != -1:
-            results.append(1 + result)
-    memo[amount] = min(results) if results else -1
+        change = coinsChange_memo(coins, amount - coin, memo)
+        if best != -1 and change != -1:
+            best = min(best, 1 + change)
+        elif change != -1:
+            best = 1 + change
+    memo[amount] = best
     return memo[amount]
 
 def coinsChange_recur(coins: List[int], amount: int, idx: int, n: int) -> int:
