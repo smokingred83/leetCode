@@ -13,12 +13,13 @@ def maxProfit_recur(prices: List[int]) -> int:
     return max_recur(prices, 0)
 
 def maxProfit(prices: List[int]) -> int:
-    best, pre_min = 0, prices[0]
-    for current in prices:
-        tmp = current - pre_min
-        best = best if best > tmp else tmp
-        pre_min = pre_min if pre_min < current else current
-    return best
+    profit, _min = 0, prices[0]
+    if len(prices) > 1:
+        for p in prices:
+            _min = _min if _min < p else p
+            tmp = p - _min
+            profit = profit if profit > tmp else tmp
+    return profit
 
 
 if __name__ == "__main__":
